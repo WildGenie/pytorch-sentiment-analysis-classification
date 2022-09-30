@@ -16,4 +16,3 @@ if __name__ == "__main__":
     tensor = torch.LongTensor(indexed).to(device)
     tensor = tensor.unsqueeze(1)
     prediction = F.sigmoid(model(tensor))
-    return prediction.item()

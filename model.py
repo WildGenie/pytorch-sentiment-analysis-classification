@@ -90,14 +90,13 @@ class LSTM_with_Attention(nn.Module):
         hidden = final_state.squeeze(0)
         attn_weights = torch.bmm(lstm_output, hidden.unsqueeze(2)).squeeze(2)
         soft_attn_weights = F.softmax(attn_weights, dim=1)
-        new_hidden_state = torch.bmm(lstm_output.transpose(1, 2),
-                                     soft_attn_weights.unsqueeze(2)).squeeze(2)
-
-        return new_hidden_state
+        return torch.bmm(
+            lstm_output.transpose(1, 2), soft_attn_weights.unsqueeze(2)
+        ).squeeze(2)
 
     def attention(self, lstm_output, final_state):
         lstm_output = lstm_output.permute(1, 0, 2)
-        merged_state = torch.cat([s for s in final_state], 1)
+        merged_state = torch.cat(list(final_state), 1)
         merged_state = merged_state.squeeze(0).unsqueeze(2)
         weights = torch.bmm(lstm_output, merged_state)
         weights = F.softmax(weights.squeeze(2), dim=1).unsqueeze(2)

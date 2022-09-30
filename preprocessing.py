@@ -21,7 +21,7 @@ class TSVGenerator(object):
 
         with open(os.path.join(self.root_dir, f'{phase}.tsv'), 'w') as f:
             for sen, lab in zip(corpus, label):
-                f.write('{}\t{}\n'.format(sen, lab))
+                f.write(f'{sen}\t{lab}\n')
 
 
 if __name__ == '__main__':

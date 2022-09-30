@@ -13,8 +13,7 @@ from model import RNN, LSTM, CNN, LSTM_with_Attention
 
 def generate_experiment_name():
     dirs = glob('runs/*')
-    indices = [int(val[-3:]) for val in dirs if val[-3:].isdigit()]
-    if indices:
+    if indices := [int(val[-3:]) for val in dirs if val[-3:].isdigit()]:
         last_idx = max(max(indices), 0)
     else:
         last_idx = 0
@@ -94,8 +93,7 @@ def binary_accuracy(preds, y):
     rounded_preds = torch.round(torch.sigmoid(preds))
     # convert into float for division
     correct = (rounded_preds == y).float()
-    acc = correct.sum() / len(correct)
-    return acc
+    return correct.sum() / len(correct)
 
 
 def main(args):
